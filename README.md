@@ -37,3 +37,6 @@ Ideally check out the VirusTotal API directly and get your free API key:
 https://www.virustotal.com/en/documentation/public-api/
 
 written by @AlysonBelle
+
+Prieview of demo:
+<img src="screenshots/main.png" />
