@@ -19,7 +19,6 @@ def format_report(report_response) -> None:
 
 def retrieve_scan_report():
 	scan_log = open('report/scan_log.log').read().split('\n')
-	print('here')
 	for log in scan_log:
 		report_hash = log.split('\t\t')
 		headers = {
@@ -32,8 +31,6 @@ def retrieve_scan_report():
 		try:
 			json_response = response.json()
 		except:
-			print('FAIL')
 			return ;
-		print('json response ', json_response)
 		format_report(json_response)
 
