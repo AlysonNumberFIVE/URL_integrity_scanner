@@ -27,5 +27,10 @@ FraudSense >  {'detected': False, 'result': 'clean site'}
 ...
 ```
 
-This is strictly for demoing purposes but can be used to analyse links for suspicious activity.
+This is strictly for demoing purposes but can be used to analyse links for suspicious activity
+(if you'd like).
 
+Ideally check out the VirusTotal API directly and get your free API key:
+https://www.virustotal.com/#/home/upload
+
+written by @AlysonBelle
