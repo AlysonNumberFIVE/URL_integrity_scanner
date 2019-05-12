@@ -1,0 +1,23 @@
+.hidden {
+  display: none;
+}
+
+form > .row {
+  margin-bottom: 20px;
+}
+
+form > .row:last-child {
+  margin-bottom: 0;
+}
+
+form input.invalid {
+  border-color: #dc3545;
+}
+
+form .invalid-feedback {
+  color: #dc3545;
+  font-size: 14px;
+  line-height: 21px;
+  margin-top: 4px;
+  text-align: left;
+}

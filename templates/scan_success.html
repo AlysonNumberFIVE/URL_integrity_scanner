@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>SweetAlert AJAX form validation example</title>
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css'>
+
+   
+  <style>
+  	.hidden {
+	  display: none;
+	}
+
+	form > .row {
+	  margin-bottom: 20px;
+	}
+
+	form > .row:last-child {
+	  margin-bottom: 0;
+	}
+
+	form input.invalid {
+	  border-color: #dc3545;
+	}
+
+	form .invalid-feedback {
+	  color: #dc3545;
+	  font-size: 14px;
+	  line-height: 21px;
+	  margin-top: 4px;
+	  text-align: left;
+	}
+	h2 {
+		text-align: center;
+		color: #2C91E5;
+		margin-top: 17%;
+	}
+
+	h1 {
+		color: #2C91E5;
+		padding-left: 5%;
+	}
+	.btn:hover {
+		background-color: #2C91E5;
+		color: white;
+	}
+
+	.btn {
+		padding: 2%;
+		background: none;
+		border: 1px solid #2C91E5;
+		color: #2C91E5;
+		transition: 0.2s;
+	}
+	#last_button {
+		padding-bottom: 10%;
+	}
+  </style>
+  
+</head>
+
+<body>
+
+	<h2>Upload Succesful</h2>
+
+  <div id="form-template" class="hidden">
+  <form method="POST">
+  	{{ email.csrf_token }}
+    <div class="row">
+      <div class="col-sm-12">
+        <input name="username" placeholder="Username" class="swal-content__input" type="text">
+      </div>
+    </div>
+  </form>    
+</div>
+<div class="row center-sm">
+  <div class="col-sm-12" id='last_button'>
+    <p><button class="btn" id="click-me-btn">View Report</button></p>
+    <p><button class="btn" onclick="window.location.href='{{ url_for('uplaod') }}'">Scan Again</button>
+  </div>
+</div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/sweetalert@2.0.8/dist/sweetalert.min.js'></script>
+
+  
+
+    <script>
+    	
+
+		// store form HTML markup in a JS variable
+		var formTemplate = $('#form-template > form').clone()[0];
+		$('#form-template').remove();
+
+		// prepare SweetAlert configuration
+		var swalConfig = {
+		  title: 'Submit email?',
+		  text: 'The URL scan report will be sent to this email when it\'s ready.',
+		  content: formTemplate,
+		  button: {
+		    text: 'Submit',
+		    closeModal: false
+		  }
+		};
+
+		// handle clicks on the "Click me" button
+		$('#click-me-btn').click(function () {
+		  swal(swalConfig).then((value) => {
+		  	if (value) {
+		  		console.log('value is ', formTemplate)
+		  		swal('Email Saved', 'Your report will be sent when it\'s ready', 'success')
+		  		window.location.href="{{ url_for('send_email') }}"
+
+		  	}
+		  });
+		});
+
+		// handle clicks on the "Submit" button of the modal form
+		$('body').on('click', '.swal-button--confirm', function() {
+		  simulateAjaxRequest();
+		});
+
+		// mock AJAX requests for this demo
+		var isFakeAjaxRequestSuccessfull = false;
+
+		function simulateAjaxRequest() {
+		  // "send" the fake AJAX request
+		  var fakeAjaxRequest = new Promise(function (resolve, reject) {
+		    setTimeout(function () {
+		      isFakeAjaxRequestSuccessfull ? resolve() : reject();
+		      isFakeAjaxRequestSuccessfull = !isFakeAjaxRequestSuccessfull;
+		      swal.stopLoading();
+		    }, 200);
+		  });
+		  
+		  // attach success and error handlers to the fake AJAX request
+		  fakeAjaxRequest.then(function () {
+		    // do this if the AJAX request is successfull:
+		    $('input.invalid').removeClass('invalid');
+		    $('.invalid-feedback').remove();
+		  }).catch(function () {
+		    // do this if the AJAX request fails:
+		    var errors = {
+		      username: 'Username is invalid',
+		      password: 'Password is invalid'
+		    };
+		    $.each(errors, function(key, value) {
+		      $('input[name="' + key + '"]').addClass('invalid').after('<div class="invalid-feedback">' + value + '</div>');
+		    });
+		  });
+		}
+    </script>
+
+
+
+
+</body>
+
+</html>
