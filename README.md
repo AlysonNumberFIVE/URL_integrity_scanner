@@ -26,11 +26,14 @@ K7AntiVirus >  {'detected': False, 'result': 'clean site'}
 FraudSense >  {'detected': False, 'result': 'clean site'}
 ...
 ```
+Once email's configured, these results will be formatted in the response and an email
+will be sent with the scan results. This is more useful for bulk scans where a single
+read from a single screen (terminal/web browser etc.) isn't practical.
 
 This is strictly for demoing purposes but can be used to analyse links for suspicious activity
 (if you'd like).
 
 Ideally check out the VirusTotal API directly and get your free API key:
-https://www.virustotal.com/#/home/upload
+https://www.virustotal.com/en/documentation/public-api/
 
 written by @AlysonBelle
